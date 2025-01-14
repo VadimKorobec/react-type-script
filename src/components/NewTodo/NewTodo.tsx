@@ -1,28 +1,30 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-
-import Todo from "../types/todo.types";
 import { nanoid } from "nanoid";
 
+import Todo from "../types/todo.types";
+
+import styles from './NewTodo.module.css'
+
 interface NewTodoProps {
-  onTodos: (data: Todo) => void;
+  onAddTodo: (data: Todo) => void;
 }
 
-const NewTodo = ({ onTodos }: NewTodoProps) => {
+const NewTodo = ({ onAddTodo }: NewTodoProps) => {
   const [newTodo, setNewTodo] = useState<Todo>({
     id: "",
     title: "",
   });
 
-  console.log(newTodo);
+  console.log(newTodo)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNewTodo({
       ...newTodo,
-      title: e.target.value,
+      title: e.target.value.trim(),
     });
   };
 
-  const handleCreateNewTodo = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const todo: Todo = {
@@ -30,7 +32,7 @@ const NewTodo = ({ onTodos }: NewTodoProps) => {
       title: newTodo.title,
     };
 
-    onTodos(todo);
+    onAddTodo(todo);
     reset();
   };
 
@@ -39,8 +41,8 @@ const NewTodo = ({ onTodos }: NewTodoProps) => {
   };
 
   return (
-    <form onSubmit={handleCreateNewTodo}>
-      <label>Create A New Todo</label>
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <label>Text Todo</label>
       <input
         type="text"
         value={newTodo.title}
