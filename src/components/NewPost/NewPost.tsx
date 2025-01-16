@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { Post } from "../types/post.type";
 import { addPost } from "../redux/postSlice";
 
+import styles from './NewPost.module.css'
+
 const NewPost = () => {
   const [post, setPost] = useState<Post>({
     id: "",
@@ -44,7 +46,7 @@ const NewPost = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <p>
         <label htmlFor="body">Text</label>
         <textarea
