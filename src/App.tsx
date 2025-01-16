@@ -1,8 +1,13 @@
-
+import NewPost from "./components/NewPost/NewPost";
+import PostsList from "./components/PostsList/PostsList";
 
 const App = () => {
-  return <h2>Hello World</h2>
-  
+  return (
+    <>
+      <NewPost/>
+      <PostsList />
+    </>
+  );
 };
 
 export default App;
