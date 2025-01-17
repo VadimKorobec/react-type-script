@@ -5,9 +5,14 @@ import { useDispatch } from "react-redux";
 import { Post } from "../types/post.type";
 import { addPost } from "../redux/postSlice";
 
-import styles from './NewPost.module.css'
+import styles from "./NewPost.module.css";
 
-const NewPost = () => {
+interface NewPostProps {
+  onToggleModal: () => void;
+}
+
+const NewPost = ({ onToggleModal }: NewPostProps) => {
+  console.log(onToggleModal)
   const [post, setPost] = useState<Post>({
     id: "",
     author: "",
@@ -38,6 +43,7 @@ const NewPost = () => {
     };
 
     dispatch(addPost(newPost));
+    onToggleModal();
     reset();
   };
 

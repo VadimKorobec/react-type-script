@@ -1,4 +1,5 @@
 import { Post } from "../types/post.type";
+
 import styles from "./PostItems.module.css";
 
 interface PostItemProps {

@@ -19,8 +19,15 @@ export const postsSlice = createSlice({
       }
       return [...state, action.payload];
     },
+    findPost: (state, action: PayloadAction<string>) => {
+      const newState = state.filter((item) =>
+        item.text.toLowerCase().includes(action.payload.toLowerCase())
+      );
+
+      return newState;
+    },
   },
 });
 
-export const { addPost } = postsSlice.actions;
-export const postsReducer =  postsSlice.reducer;
+export const { addPost,findPost } = postsSlice.actions;
+export const postsReducer = postsSlice.reducer;
