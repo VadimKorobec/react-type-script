@@ -9,8 +9,12 @@
 }
 
 .modal {
+  position:fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border: none;
   padding: 0;
   overflow: hidden;
-  z-index: 1;
+  z-index: 2;
 }

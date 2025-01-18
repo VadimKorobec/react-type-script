@@ -1,23 +1,20 @@
-import { useState } from "react";
 import NewPost from "./components/NewPost/NewPost";
 import PostsList from "./components/PostsList/PostsList";
 import Modal from "./components/Modal/Modal";
 import MainHeader from "./components/MainHeader/MainHeader";
+import { useSelector } from "react-redux";
+import { RootState } from "./components/redux/store";
 
 const App = () => {
-  const [toggleModal, setToggleModal] = useState<boolean>(false);
-
-  const handleToggleModal = () => {
-    setToggleModal((prevState) => !prevState);
-  };
+  const isOpenModal = useSelector((state: RootState) => state.modal.isOpen);
 
   return (
     <>
-      <MainHeader onToggleModal={handleToggleModal}  />
+      <MainHeader />
       <main>
-        {toggleModal && (
-          <Modal onToggleModal={handleToggleModal}>
-            <NewPost onToggleModal={handleToggleModal} />
+        {isOpenModal && (
+          <Modal>
+            <NewPost />
           </Modal>
         )}
         <PostsList />

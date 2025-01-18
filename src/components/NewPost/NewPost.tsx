@@ -6,13 +6,9 @@ import { Post } from "../types/post.type";
 import { addPost } from "../redux/postSlice";
 
 import styles from "./NewPost.module.css";
+import { closeModal } from "../redux/modalSlice";
 
-interface NewPostProps {
-  onToggleModal: () => void;
-}
-
-const NewPost = ({ onToggleModal }: NewPostProps) => {
-  console.log(onToggleModal)
+const NewPost = () => {
   const [post, setPost] = useState<Post>({
     id: "",
     author: "",
@@ -43,7 +39,7 @@ const NewPost = ({ onToggleModal }: NewPostProps) => {
     };
 
     dispatch(addPost(newPost));
-    onToggleModal();
+    dispatch(closeModal(false));
     reset();
   };
 
