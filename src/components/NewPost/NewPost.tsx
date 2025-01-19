@@ -70,7 +70,12 @@ const NewPost = () => {
           onChange={handleChange}
         />
       </p>
-      <button type="submit">Create Post</button>
+      <p className={styles.actions}>
+        <button onClick={() => dispatch(closeModal(false))} type="button">
+          Cancel
+        </button>
+        <button type="submit">Submit</button>
+      </p>
     </form>
   );
 };

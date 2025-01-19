@@ -10,7 +10,7 @@ const PostItem = ({ post }: PostItemProps) => {
   return (
     <div className={styles.post}>
       <p className={styles.author}>{post.author}</p>
-      <p className={styles.text}>{post.text}</p>
+      <p className={styles.text}>{post.body}</p>
     </div>
   );
 };
