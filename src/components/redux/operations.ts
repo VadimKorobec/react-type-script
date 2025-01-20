@@ -15,11 +15,26 @@ export const fetchPosts = createAsyncThunk<
     return response.data.posts;
   } catch (e: unknown) {
     if (e instanceof Error) {
-      return thunkApi.rejectWithValue(
-        e.message || "Ошибка при загрузке постов"
-      );
+      return thunkApi.rejectWithValue(e.message || "Error loading posts");
     }
 
-    return thunkApi.rejectWithValue("Неизвестная ошибка при загрузке постов");
+    return thunkApi.rejectWithValue("Unknown error when loading posts");
   }
 });
+
+export const addPost = createAsyncThunk<Post, Post, { rejectValue: string }>(
+  "posts/addPost",
+  async (post: Post, thunkApi) => {
+    try {
+      const response = await axios.post("/posts", post);
+      
+      return response.data.post;
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        return thunkApi.rejectWithValue(e.message || "Error added post");
+      }
+
+      return thunkApi.rejectWithValue("Unknown error occurred ");
+    }
+  }
+);

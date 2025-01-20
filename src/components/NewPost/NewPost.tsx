@@ -1,21 +1,21 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { nanoid } from "nanoid";
 import { useDispatch } from "react-redux";
+import { closeModal } from "../redux/modalSlice";
+import { addPost } from "../redux/operations";
+import { AppDispatch } from "../redux/store";
 
 import { Post } from "../types/post.type";
-import { addPost } from "../redux/postSlice";
+
 
 import styles from "./NewPost.module.css";
-import { closeModal } from "../redux/modalSlice";
 
 const NewPost = () => {
   const [post, setPost] = useState<Post>({
-    id: "",
     author: "",
-    text: "",
+    body: "",
   });
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -33,9 +33,8 @@ const NewPost = () => {
     e.preventDefault();
 
     const newPost: Post = {
-      id: nanoid(),
       author: post.author,
-      text: post.text,
+      body: post.body,
     };
 
     dispatch(addPost(newPost));
@@ -44,7 +43,7 @@ const NewPost = () => {
   };
 
   const reset = () => {
-    setPost({ id: "", text: "", author: "" });
+    setPost({ body: "", author: "" });
   };
 
   return (
@@ -52,8 +51,8 @@ const NewPost = () => {
       <p>
         <label htmlFor="body">Text</label>
         <textarea
-          name="text"
-          value={post.text}
+          name="body"
+          value={post.body}
           required
           rows={3}
           onChange={handleChange}

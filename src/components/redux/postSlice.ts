@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 import { Post } from "../types/post.type";
-import { fetchPosts } from "./operations";
+import { fetchPosts, addPost } from "./operations";
 
 export interface PostsState {
   posts: Post[];
@@ -20,19 +20,6 @@ export const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
-    addPost: (state, action: PayloadAction<Post>) => {
-      const isDublicate = state.posts.some(
-        (item) => item.body.toLowerCase() === action.payload.body.toLowerCase()
-      );
-
-      if (isDublicate) {
-        return state;
-      }
-      return {
-        ...state,
-        posts: [...state.posts, action.payload],
-      };
-    },
     findPost: (state, action: PayloadAction<string>) => {
       const filteredPosts = state.posts.filter((item) =>
         item.body.toLowerCase().includes(action.payload.toLowerCase())
@@ -66,12 +53,45 @@ export const postsSlice = createSlice({
           return {
             ...state,
             isLoading: false,
-            error: action.payload || "Произошла ошибка при загрузке данных",
+            error: action.payload || "An error occurred while loading data",
+          };
+        }
+      )
+      .addCase(addPost.pending, (state) => {
+        return {
+          ...state,
+          isLoading: true,
+        };
+      })
+      .addCase(addPost.fulfilled, (state, action: PayloadAction<Post>) => {
+        
+        const isDublicate = state.posts.some(
+          (item) =>
+            item.body.toLowerCase() === action.payload.body.toLowerCase()
+        );
+
+        if (isDublicate) {
+          return { ...state, isLoading: false };
+        }
+
+        return {
+          ...state,
+          posts: [...state.posts, action.payload],
+          isLoading: false,
+        };
+      })
+      .addCase(
+        addPost.rejected,
+        (state, action: PayloadAction<string| undefined>) => {
+          return {
+            ...state,
+            isLoading: false,
+            error: action.payload || "An error occurred while loading data",
           };
         }
       );
   },
 });
 
-export const { addPost, findPost } = postsSlice.actions;
+export const { findPost } = postsSlice.actions;
 export const postsReducer = postsSlice.reducer;

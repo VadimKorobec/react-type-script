@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../redux/store";
-
 import PostItem from "../PostItem/PostItem";
+import { AppDispatch, RootState } from "../redux/store";
 
 import styles from "./PostsList.module.css";
 import { useEffect } from "react";
@@ -11,8 +10,7 @@ const PostsList = () => {
   const { posts, isLoading, error } = useSelector(
     (state: RootState) => state.posts
   );
-
-  console.log(posts)
+  
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -20,10 +18,11 @@ const PostsList = () => {
     dispatch(fetchPosts());
   }, [dispatch]);
 
+
   return (
     <>
-      {isLoading && <b>Loading tasks...</b>}
-      {error && <b>{error}</b>}
+      {isLoading && !error && <b>Request in progress...</b>}
+      {error && <p>{error }</p>}
       {posts.length > 0 ? (
         <ul className={styles.posts}>
           {posts.map((post) => (
